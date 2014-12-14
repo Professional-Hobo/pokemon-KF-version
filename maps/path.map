@@ -1,0 +1,28 @@
+@vars
+a = SAND_PATH_TOP_L
+b = SAND_PATH_TOP_M
+c = SAND_PATH_TOP_R
+d = SAND_PATH_MID_L
+e = SAND_PATH_MID_M
+f = SAND_PATH_MID_R
+g = SAND_PATH_BOT_L
+h = SAND_PATH_BOT_M
+i = SAND_PATH_BOT_R
+j = SAND_PATH_TL_CRNR
+k = SAND_PATH_TR_CRNR
+l = SAND_PATH_BL_CRNR
+m = SAND_PATH_BR_CRNR
+n = WILD_GRASS
+o = WILD_GRASS^ROCK
+!vars
+abcnnnnnnnnnn
+defnnnnnnnnnn
+defnnonnnnnnn
+defnnnnnnnnnn
+defnnnnnnonnn
+defnnnnnnnnnn
+defnnnnnnnnnn
+defnnnnnnnnnn
+dekbbbbbbbbbc
+deeeeeeeeeeef
+ghhhhhhhhhlef
