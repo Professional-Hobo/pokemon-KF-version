@@ -5,7 +5,7 @@ class Map
     const DEBUG       = true;
     const STRICT      = true;
     const TILES       = "img/tiles.png";
-    const GROUP_TILES = array("POKECENTER");
+    const GROUP_TILES = array("POKECENTER", "OAKLAB", "PLAYER_HOUSE", "RIVAL_HOUSE");
 
     private $src;
     private $raw_data;
@@ -167,6 +167,15 @@ class Map
                     if ($fgbg[1] == "POKECENTER") {
                         $fg = new Tile("POKECENTER_" . ($this->group_tiles["POKECENTER"]));
                         $this->group_tiles["POKECENTER"]++;
+                    } else if ($fgbg[1] == "OAKLAB") {
+                        $fg = new Tile("OAKLAB_" . ($this->group_tiles["OAKLAB"]));
+                        $this->group_tiles["OAKLAB"]++;
+                    } else if ($fgbg[1] == "PLAYER_HOUSE") {
+                        $fg = new Tile("PLAYER_HOUSE_" . ($this->group_tiles["PLAYER_HOUSE"]));
+                        $this->group_tiles["PLAYER_HOUSE"]++;
+                    } else if ($fgbg[1] == "RIVAL_HOUSE") {
+                        $fg = new Tile("RIVAL_HOUSE_" . ($this->group_tiles["RIVAL_HOUSE"]));
+                        $this->group_tiles["RIVAL_HOUSE"]++;
                     } else {
                         $fg = new Tile($fgbg[1]);
                     }
@@ -175,7 +184,14 @@ class Map
                     imagecopyresampled($this->map, $tiles, $b*16, $a*16, $bg->getCoords()[0]*16, $bg->getCoords()[1]*16, 16, 16, 16, 16);
 
                     // And then foreground
-                    imagecopyresampled($this->map, $tiles, $b*16, $a*16, $fg->getCoords()[0]*16, $fg->getCoords()[1]*16, 16, 16, 16, 16);
+                    // if it needs to be flipped
+                    if (array_key_exists("FLP", constant("Tile::" . $fg->getType())) && constant("Tile::" . $fg->getType())["FLP"] == 0x1) {
+                        $res = $this->goodImageCrop($tiles, array("x" => $fg->getCoords()[0]*16, "y" => $fg->getCoords()[1]*16, "width" => 16, "height" => 16));
+                        $this->flipHorizontal($res);
+                        imagecopyresampled($this->map, $res, $b*16, $a*16, 0, 0, 16, 16, 16, 16);
+                    } else {
+                        imagecopyresampled($this->map, $tiles, $b*16, $a*16, $fg->getCoords()[0]*16, $fg->getCoords()[1]*16, 16, 16, 16, 16);
+                    }
 
                     // If foreground has boundary, add to boundary list
                     if ($fg->hasBoundary()) {
@@ -239,6 +255,38 @@ class Map
 
     public function getBoundaries() {
         return $this->boundaries;
+    }
+
+    private function flipHorizontal(&$img) {
+        $size_x = imagesx($img); $size_y = imagesy($img);
+        $temp = imagecreatetruecolor($size_x, $size_y);
+        imagealphablending($temp, false);
+        imagesavealpha($temp, true);
+        $x = imagecopyresampled($temp, $img, 0, 0, ($size_x-1), 0, $size_x, $size_y, 0-$size_x, $size_y);
+        if ($x) {
+            $img = $temp;
+        } else {
+            die("Unable to flip image");
+        }
+    }
+
+    private function goodImageCrop($src, array $rect) {
+        $dest = imagecreatetruecolor($rect['width'], $rect['height']);
+        imagealphablending($dest, false);
+        imagesavealpha($dest, true);
+        imagecopyresampled(
+            $dest,
+            $src,
+            0,
+            0,
+            $rect['x'],
+            $rect['y'],
+            $rect['width'],
+            $rect['height'],
+            $rect['width'],
+            $rect['height']
+        );
+    return $dest;
     }
 }
 ?>

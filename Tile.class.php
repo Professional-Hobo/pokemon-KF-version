@@ -11,6 +11,7 @@ class Tile
     GRASS_2           = array(ID => 0x0001, BND => 0x0),
     GRASS_3           = array(ID => 0x0002, BND => 0x0),
     GRASS_4           = array(ID => 0x0003, BND => 0x0),
+    GRASS_5           = array(ID => 0x0BD9, BND => 0x0),
 
     // Trees
     TREE_TOP_L_BG     = array(ID => 0x0004, BND => 0x1),
@@ -25,14 +26,24 @@ class Tile
     TREE_MID_R_NBG    = array(ID => 0x000F, BND => 0x1),
     TREE_BOT_L_NBG    = array(ID => 0x0016, BND => 0x1),
     TREE_BOT_R_NBG    = array(ID => 0x0017, BND => 0x1),
+    TREE_2_TOP_L_NBG  = array(ID => 0x1006, BND => 0x1),
+    TREE_2_TOP_R_NBG  = array(ID => 0x1007, BND => 0x1),
+    TREE_2_TOP_L_BG   = array(ID => 0x1044, BND => 0x1),
+    TREE_2_TOP_R_BG   = array(ID => 0x1045, BND => 0x1),
+    TREE_2_MID_L_NBG  = array(ID => 0x100E, BND => 0x1),
+    TREE_2_MID_R_NBG  = array(ID => 0x100F, BND => 0x1),
+    TREE_2_BOT_L_NBG  = array(ID => 0x1016, BND => 0x1),
+    TREE_2_BOT_R_NBG  = array(ID => 0x1017, BND => 0x1),
     CUT_TREE          = array(ID => 0x0009, BND => 0x1),
 
     // Wild Pokemon Grass
     WILD_GRASS        = array(ID => 0x0008, BND => 0x0),
 
-    // Bush and rock
+    // Bush, rock, flower
     BUSH              = array(ID => 0x000A, BND => 0x1),
     ROCK              = array(ID => 0x000B, BND => 0x1),
+    FLOWER            = array(ID => 0x0CD7, BND => 0x0),
+    SAND_PATCH        = array(ID => 0x0CD6, BND => 0x0),
 
     // Path
     SAND_PATH_TOP_L   = array(ID => 0x0010, BND => 0x0),
@@ -102,7 +113,98 @@ class Tile
     POKECENTER_22     = array(ID => 0x0189, BND => 0x1),
     POKECENTER_23     = array(ID => 0x018A, BND => 0x0),
     POKECENTER_24     = array(ID => 0x018B, BND => 0x1),
-    POKECENTER_25     = array(ID => 0x018C, BND => 0x1);
+    POKECENTER_25     = array(ID => 0x018C, BND => 0x1),
+
+    // OAK LAB
+    OAKLAB_1          = array(ID => 0x1288, BND => 0x1),
+    OAKLAB_2          = array(ID => 0x1289, BND => 0x1),
+    OAKLAB_3          = array(ID => 0x128A, BND => 0x1),
+    OAKLAB_4          = array(ID => 0x128B, BND => 0x1),
+    OAKLAB_5          = array(ID => 0x128C, BND => 0x1),
+    OAKLAB_6          = array(ID => 0x128D, BND => 0x1),
+    OAKLAB_7          = array(ID => 0x128E, BND => 0x1),
+    OAKLAB_8          = array(ID => 0x1290, BND => 0x1),
+    OAKLAB_9          = array(ID => 0x1291, BND => 0x1),
+    OAKLAB_10         = array(ID => 0x1292, BND => 0x1),
+    OAKLAB_11         = array(ID => 0x1293, BND => 0x1),
+    OAKLAB_12         = array(ID => 0x1294, BND => 0x1),
+    OAKLAB_13         = array(ID => 0x1295, BND => 0x1),
+    OAKLAB_14         = array(ID => 0x1296, BND => 0x1),
+    OAKLAB_15         = array(ID => 0x1298, BND => 0x1),
+    OAKLAB_16         = array(ID => 0x1299, BND => 0x1),
+    OAKLAB_17         = array(ID => 0x129A, BND => 0x1),
+    OAKLAB_18         = array(ID => 0x129B, BND => 0x1),
+    OAKLAB_19         = array(ID => 0x129C, BND => 0x1),
+    OAKLAB_20         = array(ID => 0x129D, BND => 0x1),
+    OAKLAB_21         = array(ID => 0x129E, BND => 0x1),
+    OAKLAB_22         = array(ID => 0x12A0, BND => 0x1),
+    OAKLAB_23         = array(ID => 0x12A1, BND => 0x1),
+    OAKLAB_24         = array(ID => 0x12A2, BND => 0x1),
+    OAKLAB_25         = array(ID => 0x12A3, BND => 0x1),
+    OAKLAB_26         = array(ID => 0x12A4, BND => 0x1),
+    OAKLAB_27         = array(ID => 0x12A5, BND => 0x1),
+    OAKLAB_28         = array(ID => 0x12A6, BND => 0x1),
+    OAKLAB_29         = array(ID => 0x12A8, BND => 0x1),
+    OAKLAB_30         = array(ID => 0x12A9, BND => 0x1),
+    OAKLAB_31         = array(ID => 0x12AA, BND => 0x1),
+    OAKLAB_32         = array(ID => 0x12AB, BND => 0x1),
+    OAKLAB_33         = array(ID => 0x12AC, BND => 0x0),
+    OAKLAB_34         = array(ID => 0x12AD, BND => 0x1),
+    OAKLAB_35         = array(ID => 0x12AE, BND => 0x1),
+
+    // Player House
+    PLAYER_HOUSE_1    = array(ID => 0x1260, BND => 0x1),
+    PLAYER_HOUSE_2    = array(ID => 0x1261, BND => 0x1),
+    PLAYER_HOUSE_3    = array(ID => 0x1262, BND => 0x1),
+    PLAYER_HOUSE_4    = array(ID => 0x1263, BND => 0x1),
+    PLAYER_HOUSE_5    = array(ID => 0x1264, BND => 0x1),
+    PLAYER_HOUSE_6    = array(ID => 0x1268, BND => 0x1),
+    PLAYER_HOUSE_7    = array(ID => 0x1269, BND => 0x1),
+    PLAYER_HOUSE_8    = array(ID => 0x126A, BND => 0x1),
+    PLAYER_HOUSE_9    = array(ID => 0x126B, BND => 0x1),
+    PLAYER_HOUSE_10   = array(ID => 0x126C, BND => 0x1),
+    PLAYER_HOUSE_11   = array(ID => 0x1270, BND => 0x1),
+    PLAYER_HOUSE_12   = array(ID => 0x1271, BND => 0x1),
+    PLAYER_HOUSE_13   = array(ID => 0x1272, BND => 0x1),
+    PLAYER_HOUSE_14   = array(ID => 0x1273, BND => 0x1),
+    PLAYER_HOUSE_15   = array(ID => 0x1274, BND => 0x1),
+    PLAYER_HOUSE_16   = array(ID => 0x1278, BND => 0x1),
+    PLAYER_HOUSE_17   = array(ID => 0x1279, BND => 0x1),
+    PLAYER_HOUSE_18   = array(ID => 0x127A, BND => 0x1),
+    PLAYER_HOUSE_19   = array(ID => 0x127B, BND => 0x1),
+    PLAYER_HOUSE_20   = array(ID => 0x127C, BND => 0x1),
+    PLAYER_HOUSE_21   = array(ID => 0x1280, BND => 0x1),
+    PLAYER_HOUSE_22   = array(ID => 0x1281, BND => 0x1),
+    PLAYER_HOUSE_23   = array(ID => 0x1282, BND => 0x1),
+    PLAYER_HOUSE_24   = array(ID => 0x1283, BND => 0x0),
+    PLAYER_HOUSE_25   = array(ID => 0x1284, BND => 0x1),
+
+    // Rival House
+    RIVAL_HOUSE_1    = array(ID => 0x1260, BND => 0x1),
+    RIVAL_HOUSE_2    = array(ID => 0x1261, BND => 0x1),
+    RIVAL_HOUSE_3    = array(ID => 0x1262, BND => 0x1),
+    RIVAL_HOUSE_4    = array(ID => 0x1263, BND => 0x1),
+    RIVAL_HOUSE_5    = array(ID => 0x1264, BND => 0x1),
+    RIVAL_HOUSE_6    = array(ID => 0x1268, BND => 0x1),
+    RIVAL_HOUSE_7    = array(ID => 0x1269, BND => 0x1),
+    RIVAL_HOUSE_8    = array(ID => 0x126A, BND => 0x1),
+    RIVAL_HOUSE_9    = array(ID => 0x126B, BND => 0x1),
+    RIVAL_HOUSE_10   = array(ID => 0x126C, BND => 0x1),
+    RIVAL_HOUSE_11   = array(ID => 0x1270, BND => 0x1),
+    RIVAL_HOUSE_12   = array(ID => 0x1271, BND => 0x1),
+    RIVAL_HOUSE_13   = array(ID => 0x1272, BND => 0x1),
+    RIVAL_HOUSE_14   = array(ID => 0x1273, BND => 0x1),
+    RIVAL_HOUSE_15   = array(ID => 0x1274, BND => 0x1),
+    RIVAL_HOUSE_16   = array(ID => 0x127C, BND => 0x1, FLP => 0x1),
+    RIVAL_HOUSE_17   = array(ID => 0x127B, BND => 0x1, FLP => 0x1),
+    RIVAL_HOUSE_18   = array(ID => 0x127A, BND => 0x1, FLP => 0x1),
+    RIVAL_HOUSE_19   = array(ID => 0x1279, BND => 0x1, FLP => 0x1),
+    RIVAL_HOUSE_20   = array(ID => 0x1278, BND => 0x1, FLP => 0x1),
+    RIVAL_HOUSE_21   = array(ID => 0x1284, BND => 0x1, FLP => 0x1),
+    RIVAL_HOUSE_22   = array(ID => 0x1283, BND => 0x0, FLP => 0x1),
+    RIVAL_HOUSE_23   = array(ID => 0x1282, BND => 0x1, FLP => 0x1),
+    RIVAL_HOUSE_24   = array(ID => 0x1281, BND => 0x1, FLP => 0x1),
+    RIVAL_HOUSE_25   = array(ID => 0x1280, BND => 0x1, FLP => 0x1);
 
     private $type;
     private $coords;
@@ -170,6 +272,10 @@ class Tile
             return true;
         }
         return false;
+    }
+
+    public function getType() {
+        return $this->type;
     }
 }
 
