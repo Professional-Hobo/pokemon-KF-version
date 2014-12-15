@@ -17,6 +17,7 @@ class Map
     private $map_lines = 0;
     private $status = null;
     private $boundaries = array();
+    private $walkables = array();
     private $group_tiles = array();
     private $unused = array();
 
@@ -185,7 +186,7 @@ class Map
 
                     // And then foreground
                     // if it needs to be flipped
-                    if (array_key_exists("FLP", constant("Tile::" . $fg->getType())) && constant("Tile::" . $fg->getType())["FLP"] == 0x1) {
+                    if (array_key_exists(FLP, constant("Tile::" . $fg->getType())) && $fg->hasFlip()) {
                         $res = $this->goodImageCrop($tiles, array("x" => $fg->getCoords()[0]*16, "y" => $fg->getCoords()[1]*16, "width" => 16, "height" => 16));
                         $this->flipHorizontal($res);
                         imagecopyresampled($this->map, $res, $b*16, $a*16, 0, 0, 16, 16, 16, 16);
@@ -193,9 +194,14 @@ class Map
                         imagecopyresampled($this->map, $tiles, $b*16, $a*16, $fg->getCoords()[0]*16, $fg->getCoords()[1]*16, 16, 16, 16, 16);
                     }
 
-                    // If foreground has boundary, add to boundary list
-                    if ($fg->hasBoundary()) {
+                    // If foreground OR background has boundary, add to boundary list
+                    if ($fg->hasBoundary() || $bg->hasBoundary()) {
                         $this->boundaries[] = array("x" => $b*16, "y" => $a*16);
+                    }
+
+                    // Check if foreground is is walkable
+                    if ($fg->hasWalk()) {
+                        $this->walkables[] = array("x" => $b*16, "y" => $a*16, "data" => base64_encode(Tile::getTileImage(constant("Tile::" . $fg->getType()))));
                     }
 
                 } else {
@@ -219,7 +225,17 @@ class Map
             // Save boundaries
             file_put_contents("boundaries/" . $this->id . ".json", json_encode($this->getBoundaries()));
 
-            // Save warps
+            foreach ($this->walkables as $index => $walk) {
+                $css  .= "#WLK_" . $index . "{position:absolute; top: " . ($walk["y"]+8) . "px; left: " . ($walk["x"]+8) . "px; z-index: 3;}\n";
+                $html .= "<img id=\"WLK_" . $index . "\" src=\"data:image/png;base64," . $walk["data"] . "\">\n";
+            }
+
+            // Save walkable tiles css
+            file_put_contents("walkables/" . $this->id . ".css", $css);
+
+            // Save walkable tiles html
+            file_put_contents("walkables/" . $this->id . ".html", $html);
+
         } else {
             header('Content-Type: image/png');
             imagepng($this->map);
@@ -255,6 +271,10 @@ class Map
 
     public function getBoundaries() {
         return $this->boundaries;
+    }
+
+    public function getWalkables() {
+        return $this->walkables;
     }
 
     private function flipHorizontal(&$img) {
