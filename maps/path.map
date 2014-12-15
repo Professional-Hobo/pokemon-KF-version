@@ -13,16 +13,29 @@ k = SAND_PATH_TR_CRNR
 l = SAND_PATH_BL_CRNR
 m = SAND_PATH_BR_CRNR
 n = WILD_GRASS
-o = WILD_GRASS^ROCK
+o = GRASS_1^POKEBALL
+p = GRASS_1^ROCK
+q = GRASS_1
+r = SAND_PATH_MID_M^ROCK
+A = STON_PATH_TOP_L
+B = STON_PATH_TOP_M
+C = STON_PATH_TOP_R
+D = STON_PATH_MID_L
+E = STON_PATH_MID_M
+F = STON_PATH_MID_R
+G = STON_PATH_BOT_L
+H = STON_PATH_BOT_M
+I = STON_PATH_BOT_R
+J = STON_PATH_MID_M^POKEBALL
 !vars
-abcnnnnnnnnnn
-defnnnnnnnnnn
-defnnonnnnnnn
-defnnnnnnnnnn
-defnnnnnnonnn
-defnnnnnnnnnn
-defnnnnnnnnnn
-defnnnnnnnnnn
-dekbbbbbbbbbc
-deeeeeeeeeeef
-ghhhhhhhhhlef
+defnnnnnnnnnnnnn
+defnnnnnnnnnnpnn
+drfnnnnnnnnnnnnn
+defnnnnqnnnnnnnn
+drfnnnnpnnnnnnnn
+defnnnnnnnnnnnnn
+defnnnnnppppnnnn
+defnnnnnnnnnnnnn
+dekbbbbbbbbbcABC
+deeeerereeeefDJF
+ghhhhhhhhhlefGHI

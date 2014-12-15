@@ -8,11 +8,13 @@ class Map
     private $src;
     private $raw_data;
     private $map;
+    private $id;
     private $vars;
     private $var_lines = 0;
     private $map_data;
     private $map_lines = 0;
     private $status = null;
+    private $boundaries = array();
 
     public function Map($src) {
         $this->src = $src;
@@ -115,7 +117,7 @@ class Map
         }
     }
 
-    public function genImage() {
+    public function genImage($save = false) {
         $tiles  = imagecreatefrompng(Map::TILES);
         $lines  = explode("\n", $this->map_data);
         $width  = max(array_map('strlen', $lines));
@@ -146,15 +148,37 @@ class Map
                     // And then foreground
                     imagecopyresampled($this->map, $tiles, $b*16, $a*16, $fg->getCoords()[0]*16, $fg->getCoords()[1]*16, 16, 16, 16, 16);
 
+                    // If foreground has boundary, add to boundary list
+                    if ($fg->hasBoundary()) {
+                        $this->boundaries[] = array("x" => $b*16, "y" => $a*16);
+                    }
+
                 } else {
                     // Apply tile
                     $tile = new Tile($this->vars[$lines[$a][$b]]);
                     imagecopyresampled($this->map, $tiles, $b*16, $a*16, $tile->getCoords()[0]*16, $tile->getCoords()[1]*16, 16, 16, 16, 16);
+
+                    // If tile has boundary, add to boundary list
+                    if ($tile->hasBoundary()) {
+                        $this->boundaries[] = array("x" => $b*16, "y" => $a*16);
+                    }
+
                 }
             }
         }
-        header('Content-Type: image/png');
-        imagepng($this->map);
+        if ($save) {
+            // Save map
+            $this->id = substr(md5(mt_rand(1,1000000)), 0, 16);
+            imagepng($this->map, "img/maps/" . $this->id . ".png");
+
+            // Save boundaries
+            file_put_contents("boundaries/" . $this->id . ".json", json_encode($this->getBoundaries()));
+
+            // Save warps
+        } else {
+            header('Content-Type: image/png');
+            imagepng($this->map);
+        }
     }
 
     private function setStatus($status) {
@@ -167,6 +191,14 @@ class Map
 
     public function getStatus() {
         return $this->status;
+    }
+
+    public function getID() {
+        return $this->id;
+    }
+
+    public function getBoundaries() {
+        return $this->boundaries;
     }
 }
 ?>
