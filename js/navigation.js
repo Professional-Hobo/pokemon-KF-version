@@ -4,7 +4,7 @@ var bump = new Audio('sounds/bump.m4a');
 var id = $('id').html();
 var boundaries;
 var x, y, xamt, yamt;
-var pos = [0,0];
+var pos = [+$("#trainer").css("left").replace(/[^-\d\.]/g, ''),+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+6];
 
 // Pre load sprite data
 var sprite
