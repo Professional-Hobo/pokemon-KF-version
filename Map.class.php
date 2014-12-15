@@ -2,8 +2,10 @@
 require_once("Tile.class.php");
 class Map
 {
-    const DEBUG = true;
-    const TILES = "img/tiles.png";
+    const DEBUG       = true;
+    const STRICT      = true;
+    const TILES       = "img/tiles.png";
+    const GROUP_TILES = array("POKECENTER");
 
     private $src;
     private $raw_data;
@@ -15,12 +17,22 @@ class Map
     private $map_lines = 0;
     private $status = null;
     private $boundaries = array();
+    private $group_tiles = array();
+    private $unused = array();
 
     public function Map($src) {
         $this->src = $src;
         $this->loadContent();
         $this->extractVars();
         $this->extractTiles();
+        $this->checkUnused();
+        if (count($this->unused) != 0 && Map::STRICT) {
+            echo $this->getStatus();
+            echo "<pre>";
+            print_r($this->unused);
+            echo "</pre>";
+            die;
+        }
     }
 
     private function loadContent() {
@@ -34,6 +46,9 @@ class Map
 
         // Go through each line
         foreach ($ex as $line) {
+            if (substr($line, 0, 2) == "//") {
+                continue;
+            }
             $this->var_lines++;
             // Remove whitespace
             $line = trim($line);
@@ -68,8 +83,12 @@ class Map
                 $fgbg = explode("^", $sep[1]);
                 foreach ($fgbg as $v) {
                     $constant = @constant("Tile::" . trim($v));
-                    if ($constant === null) {
+                    // Check if invalid and not in group tile list
+                    if ($constant === null && !in_array($v, Map::GROUP_TILES)) {
                         $this->setStatus("Invalid tile name <b>" . $v . "</b>.");
+                    }
+                    if (in_array($v, Map::GROUP_TILES)) {
+                        $this->group_tiles[$v] = 1;
                     }
                 }
                 $this->vars[$sep[0]] = $sep[1];
@@ -77,6 +96,9 @@ class Map
             }
             $constant = @constant("Tile::" . $sep[1]);
             if ($constant === null) {
+                if (in_array($sep[1], Map::GROUP_TILES)) {
+                    $this->setStatus("<b>" . $sep[1] . "</b> must have a background tile.");
+                }
                 $this->setStatus("Invalid tile name <b>" . $sep[1] . "</b>.");
             } else {
                 $this->vars[$sep[0]] = $sep[1];
@@ -133,14 +155,21 @@ class Map
         for ($a = 0; $a < $height; $a++) {
             for ($b = 0; $b < strlen($lines[$a]); $b++) {
                 if ($this->vars[$lines[$a][$b]] === null) {
-                    $this->setStatus("Map tile <b>" . $lines[$a][$b] . "</b> was not found in the vars definition section.");
+                    $this->setStatus("Map tile <b>" . $lines[$a][$b] . "</b> was not found in the vars definition section.", false);
                 }
 
                 // If fgbg tile (transparencies) else normal tile
                 if (strpos($this->vars[$lines[$a][$b]], "^") !== false) {
                     $fgbg = explode("^", $this->vars[$lines[$a][$b]]);
                     $bg = new Tile($fgbg[0]);
-                    $fg = new Tile($fgbg[1]);
+
+                    // If pokecenter, choose appropriate tile
+                    if ($fgbg[1] == "POKECENTER") {
+                        $fg = new Tile("POKECENTER_" . ($this->group_tiles["POKECENTER"]));
+                        $this->group_tiles["POKECENTER"]++;
+                    } else {
+                        $fg = new Tile($fgbg[1]);
+                    }
 
                     // Apply background first
                     imagecopyresampled($this->map, $tiles, $b*16, $a*16, $bg->getCoords()[0]*16, $bg->getCoords()[1]*16, 16, 16, 16, 16);
@@ -181,11 +210,22 @@ class Map
         }
     }
 
-    private function setStatus($status) {
+    private function setStatus($status, $echo = true) {
         $this->status = $status;
-        if (Map::DEBUG) {
+        if (Map::DEBUG && $echo) {
             echo "<pre><b style='color: red'>Fatal Error:</b> " . $status . "</pre>";
             die;
+        }
+    }
+
+    private function checkUnused() {
+        foreach ($this->vars as $key => $val) {
+            if (strpos($this->map_data, $key) === false) {
+                $this->unused[] = $key;
+            }
+        }
+        if (count($this->unused) != 0) {
+            $this->setStatus("Unused variables were detected.", false);
         }
     }
 

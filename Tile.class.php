@@ -5,6 +5,7 @@ const BND = "boundary";
 class Tile
 {
     const
+    ERROR             = array(ID => 0x0000, BND => 0x0),
     // Grass
     GRASS_1           = array(ID => 0x0000, BND => 0x0),
     GRASS_2           = array(ID => 0x0001, BND => 0x0),
@@ -99,7 +100,7 @@ class Tile
     POKECENTER_20     = array(ID => 0x0184, BND => 0x1),
     POKECENTER_21     = array(ID => 0x0188, BND => 0x1),
     POKECENTER_22     = array(ID => 0x0189, BND => 0x1),
-    POKECENTER_23     = array(ID => 0x018A, BND => 0x1),
+    POKECENTER_23     = array(ID => 0x018A, BND => 0x0),
     POKECENTER_24     = array(ID => 0x018B, BND => 0x1),
     POKECENTER_25     = array(ID => 0x018C, BND => 0x1);
 
@@ -113,6 +114,9 @@ class Tile
     }
 
     private function getTile() {
+        if ($this->type == null) {
+            $this->type = ERROR;
+        }
         $tile = constant("Tile::" . $this->type);
         $pos = $tile[ID];
         $bnd = $tile[BND];

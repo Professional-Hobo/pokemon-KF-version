@@ -1,5 +1,4 @@
 @vars
-a = SAND_PATH_TOP_L
 b = SAND_PATH_TOP_M
 c = SAND_PATH_TOP_R
 d = SAND_PATH_MID_L
@@ -7,35 +6,36 @@ e = SAND_PATH_MID_M
 f = SAND_PATH_MID_R
 g = SAND_PATH_BOT_L
 h = SAND_PATH_BOT_M
-i = SAND_PATH_BOT_R
-j = SAND_PATH_TL_CRNR
 k = SAND_PATH_TR_CRNR
 l = SAND_PATH_BL_CRNR
-m = SAND_PATH_BR_CRNR
 n = WILD_GRASS
-o = GRASS_1^POKEBALL
-p = GRASS_1^ROCK
-q = GRASS_1
-r = SAND_PATH_MID_M^ROCK
 A = STON_PATH_TOP_L
 B = STON_PATH_TOP_M
 C = STON_PATH_TOP_R
 D = STON_PATH_MID_L
-E = STON_PATH_MID_M
 F = STON_PATH_MID_R
 G = STON_PATH_BOT_L
 H = STON_PATH_BOT_M
 I = STON_PATH_BOT_R
 J = STON_PATH_MID_M^POKEBALL
+P = GRASS_1^POKECENTER
+r = WILD_GRASS^ROCK
 !vars
-defnnnnnnnnnnnnn
-defnnnnnnnnnnpnn
-drfnnnnnnnnnnnnn
-defnnnnqnnnnnnnn
-drfnnnnpnnnnnnnn
-defnnnnnnnnnnnnn
-defnnnnnppppnnnn
-defnnnnnnnnnnnnn
-dekbbbbbbbbbcABC
-deeeerereeeefDJF
-ghhhhhhhhhlefGHI
+nnnnnnnnnnnnnnnnnnn
+nnnPPPPPnnnnnnnnnnn
+nnnPPPPPnnnnnnnnnnn
+nnnPPPPPnnnnnnnnnnn
+nnnPPPPPnnnnnnnnnnn
+nnnPPPPPnnnnnnnnnnn
+nnnndefnnnnnrnnnnnn
+nnnndefnnnnnnnnnnnn
+nnnndefnnnnnnnnnnnn
+nnnndefnnnnnnnnnnnn
+nnnndefnnrnnnnnrnnn
+nnnndefnnnnnnnnnnnn
+nnnndefnnnnnnnnnnnn
+nnnndefnnnnnnnnnnnn
+nnnndekbbbbbbbbcABC
+nnnndeeeeeeeeeefDJF
+nnnnghhhhhhhhlefGHI
+nnnnnnnnnnnnndefnnn
