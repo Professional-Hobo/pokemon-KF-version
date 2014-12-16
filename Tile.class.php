@@ -108,11 +108,11 @@ class Tile
 
     // Buildings
     // Pokecenter
-    POKECENTER_1      = array(ID => 0x0168, BND => 0x1),
-    POKECENTER_2      = array(ID => 0x0169, BND => 0x1),
-    POKECENTER_3      = array(ID => 0x016A, BND => 0x1),
-    POKECENTER_4      = array(ID => 0x016B, BND => 0x1),
-    POKECENTER_5      = array(ID => 0x016C, BND => 0x1),
+    POKECENTER_1      = array(ID => 0x0168, BND => 0x0, WLK => 0x1),
+    POKECENTER_2      = array(ID => 0x0169, BND => 0x0, WLK => 0x1),
+    POKECENTER_3      = array(ID => 0x016A, BND => 0x0, WLK => 0x1),
+    POKECENTER_4      = array(ID => 0x016B, BND => 0x0, WLK => 0x1),
+    POKECENTER_5      = array(ID => 0x016C, BND => 0x0, WLK => 0x1),
 
     POKECENTER_6      = array(ID => 0x0170, BND => 0x1),
     POKECENTER_7      = array(ID => 0x0171, BND => 0x1),

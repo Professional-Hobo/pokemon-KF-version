@@ -18,24 +18,26 @@ G = STON_PATH_BOT_L
 H = STON_PATH_BOT_M
 I = STON_PATH_BOT_R
 J = STON_PATH_MID_M^POKEBALL
-P = GRASS_1^POKECENTER
+P = WILD_GRASS^POKECENTER
 r = WILD_GRASS^ROCK
 !vars
-nnnnnnnnnnnnnnnnnnn
-nnnPPPPPnnnnnnnnnnn
-nnnPPPPPnnnnnnnnnnn
-nnnPPPPPnnnnnnnnnnn
-nnnPPPPPnnnnnnnnnnn
-nnnPPPPPnnnnnnnnnnn
-nnnndefnnnnnrnnnnnn
-nnnndefnnnnnnnnnnnn
-nnnndefnnnnnnnnnnnn
-nnnndefnnnnnnnnnnnn
-nnnndefnnrnnnnnrnnn
-nnnndefnnnnnnnnnnnn
-nnnndefnnnnnnnnnnnn
-nnnndefnnnnnnnnnnnn
-nnnndekbbbbbbbbcABC
-nnnndeeeeeeeeeefDJF
-nnnnghhhhhhhhlefGHI
-nnnnnnnnnnnnndefnnn
+@map
+nnnnnnnnnnnnnnnnnnnn
+nnnPPPPPnnnnnnnnnnnn
+nnnPPPPPnnnnnnnnnnnn
+nnnPPPPPnnnnnnnnnnnn
+nnnPPPPPnnnnnnnnnnnn
+nnnPPPPPnnnnnnnnnnnn
+nnnndefnnnnnrnnnnnnn
+nnnndefnnnnnnnnnnnnn
+nnnndefnnnnnnnnnnnnn
+nnnndefnnnnnnnnnnnnn
+nnnndefnnrnnnnnrnnnn
+nnnndefnnnnnnnnnnnnn
+nnnndefnnnnnnnnnnnnn
+nnnndefnnnnnnnnnnnnn
+nnnndekbbbbcnnnnABCn
+nnnndeeeeeefnnnnDJFn
+nnnnghhhhhlfnnnnGHIn
+rrrrrrrrrrdfrrrrrrrr
+!map

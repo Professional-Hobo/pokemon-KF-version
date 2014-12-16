@@ -20,6 +20,7 @@ L = GRASS_5^OAKLAB
 P = GRASS_5^PLAYER_HOUSE
 R = GRASS_5^RIVAL_HOUSE
 !vars
+@map
 cdcdcdcdcd..cdcdcdcd
 abABABABAB..ABABABab
 cd................cd
@@ -40,3 +41,15 @@ F..F............F.F.
 TU.FFFSs........TUtu
 cd.FFF..........cdcd
 tuTUTUTUTUTUTUTUtutu
+!map
+@warps
+// For route 101
+11x1[0] = path->4x67[0]
+12x1[0] = path->4x67[0]
+// Trainer's house
+6x9 = trainer_house_downstairs->1x1[0] door_open
+// Rival's house
+15x9 = rival_house_downstairs->1x1[0] door_open
+// Oak's lab
+8x17 = oak_lab->1x1[0] door_open
+!warps
