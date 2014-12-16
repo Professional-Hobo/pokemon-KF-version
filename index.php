@@ -9,6 +9,9 @@ $map = new Map("maps/littleroot.map");
     <head>
         <title>Pokemon KF Version</title>
         <link id="walkables_css" rel="stylesheet" type="text/css" href="walkables/littleroot.css">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
     </head>
     <body>
         <id hidden>littleroot</id>

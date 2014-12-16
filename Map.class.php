@@ -267,7 +267,10 @@ class Map
             } else {
                 $this->id = substr(md5(mt_rand(1,1000000)), 0, 16);
             }
-            imagepng($this->map, "img/maps/" . $this->id . ".png");
+            // If image is preloaded, don't save
+            if ($this->headers["preimage"] != "true") {
+                imagepng($this->map, "img/maps/" . $this->id . ".png");
+            }
 
             // Save boundaries
             file_put_contents("boundaries/" . $this->id . ".json", json_encode($this->getBoundaries()));
