@@ -1,6 +1,6 @@
 var steps = 0;
 var map = document.getElementById('map');
-var bump = new Audio('sounds/bump.m4a');
+var bump = new buzz.sound('sounds/bump.m4a');
 var boundaries;
 var warps;
 var x, y, xamt, yamt;
@@ -181,7 +181,7 @@ function checkWarps(direction) {
 
             // Play warp sound if any
             if (warp.sound !== false) {
-                var sound = new Audio('sounds/' + warp.sound + '.m4a');
+                var sound = new buzz.sound('sounds/' + warp.sound + '.m4a');
                 sound.play();
             }
 

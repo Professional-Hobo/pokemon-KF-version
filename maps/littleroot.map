@@ -49,10 +49,13 @@ tuTUTUTUTUTUTUTUtutu
 // For route 101
 11x1[0] = path->11x18[0]
 12x1[0] = path->12x18[0]
+
 // Trainer's house
 6x9 = trainer_house_downstairs->1x1[0] door_open
+
 // Rival's house
 15x9 = rival_house_downstairs->1x1[0] door_open
+
 // Oak's lab
 8x17 = oak_lab->1x1[0] door_open
 !warps
