@@ -8,6 +8,8 @@ var pos = [+$("#trainer").css("left").replace(/[^-\d\.]/g, ''),+$("#trainer").cs
 var tilepos = [(+$("#trainer").css("left").replace(/[^-\d\.]/g, '')+16)/16,(+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+22)/16];
 var godmode = false;
 var showpos = false;
+var delay = 150;
+var walking = false;
 
 // Load boundaries and warps
 loadBoundaries();
@@ -38,46 +40,78 @@ $(document).keydown(function(e) {
     steps++;
     // Right
     if (e.which == 39) {
-        $('#trainer').attr("src", "img/sprites/trainer_right_" + ((steps%3)+1) + ".png");
         if (!checkWarps(1)) {
-            if (+pos[0]+16 < map.naturalWidth && validMove(1) || godmode) {
-                $("#trainer").css("left", "+=16");
-                updatePos();
+            if (+pos[0]+16 < map.naturalWidth && validMove(1) && !walking || godmode) {
+                $('#trainer').attr("src", "img/sprites/trainer_right_" + ((steps%3)+1) + ".png");
+                walking = true;
+                $( "#trainer" ).animate({
+                    left: "+=16",
+                }, delay, function() {
+                    walking = false;
+                    updatePos();
+                });
+                //$("#trainer").css("left", "+=16");
             } else {
-                bump.play();
+                if (!walking) {
+                    bump.play();
+                }
             }
         }
     // Left
     } else if (e.which == 37) {
-        $('#trainer').attr("src", "img/sprites/trainer_left_" + ((steps%3)+1) + ".png");
         if (!checkWarps(3)) {
-            if (+pos[0]-16 >= 0 && validMove(3) || godmode) {
-                $("#trainer").css("left", "-=16");
-                updatePos();
+            if (+pos[0]-16 >= 0 && validMove(3) && !walking || godmode) {
+                $('#trainer').attr("src", "img/sprites/trainer_left_" + ((steps%3)+1) + ".png");
+                walking = true;
+                $( "#trainer" ).animate({
+                    left: "-=16",
+                }, delay, function() {
+                    walking = false;
+                    updatePos();
+                });
+                //$("#trainer").css("left", "-=16");
             } else {
-                bump.play();
+                if (!walking) {
+                    bump.play();
+                }
             }
         }
     // Down
     } else if (e.which == 40) {
-        $('#trainer').attr("src", "img/sprites/trainer_front_" + ((steps%3)+1) + ".png");
         if (!checkWarps(2)) {
-            if (+pos[1]+26 < map.naturalHeight && validMove(2) || godmode) {
-                $("#trainer").css("top", "+=16");
-                updatePos();
+            if (+pos[1]+26 < map.naturalHeight && validMove(2) && !walking || godmode) {
+                $('#trainer').attr("src", "img/sprites/trainer_front_" + ((steps%3)+1) + ".png");
+                walking = true;
+                $( "#trainer" ).animate({
+                    top: "+=16",
+                }, delay, function() {
+                    walking = false;
+                    updatePos();
+                });
+                //$("#trainer").css("top", "+=16");
             } else {
-                bump.play();
+                if (!walking) {
+                    bump.play();
+                }
             }
         }
     // Up
     } else if (e.which == 38) {
-        $('#trainer').attr("src", "img/sprites/trainer_back_" + ((steps%3)+1) + ".png");
         if (!checkWarps(0)) {
-            if (+pos[1]-6 > 0 && validMove(0) || godmode) {
-                $("#trainer").css("top", "-=16");
-                updatePos();
+            if (+pos[1]-6 > 0 && validMove(0) && !walking || godmode) {
+                $('#trainer').attr("src", "img/sprites/trainer_back_" + ((steps%3)+1) + ".png");
+                walking = true;
+                $( "#trainer" ).animate({
+                    top: "-=16",
+                }, delay, function() {
+                    walking = false;
+                    updatePos();
+                });
+                //$("#trainer").css("top", "-=16");
             } else {
-                bump.play();
+                if (!walking) {
+                    bump.play();
+                }
             }
         }
     }
