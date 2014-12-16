@@ -10,6 +10,7 @@ f = SAND_PATH_MID_R
 g = SAND_PATH_BOT_L
 h = SAND_PATH_BOT_M
 k = SAND_PATH_TR_CRNR
+m = SAND_PATH_TL_CRNR
 l = SAND_PATH_BL_CRNR
 n = WILD_GRASS
 A = STON_PATH_TOP_L
@@ -33,9 +34,9 @@ nnnPPPPPnnnnnnnnnnnn
 nnnPPPPPnnnnnnnnnnnn
 nnnndefnnnnnrnnnnnnn
 nnnndefnnnnnnnnnnnnn
-nnnndefnnnnnnnnnnnnn
-nnnndefnnnnnnnnnnnnn
-nnnndefnnrnnnnnrnnnn
+bbbbmefnnnnnnnnnnnnn
+eeeeeefnnnnnnnnnnnnn
+hhhhlefnnrnnnnnrnnnn
 nnnndefnnnnnnnnnnnnn
 nnnndefnnnnnnnnnnnnn
 nnnndefnnnnnnnnnnnnn

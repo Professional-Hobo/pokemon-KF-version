@@ -1,0 +1,24 @@
+@headers
+music = littleroot
+preimage = true
+!headers
+@vars
+. = GRASS_5
+r = ROCK
+!vars
+@map
+rrrrrrrrrrr
+rrrrrrrrrrr
+rrrrr..r.rr
+...........
+..rrr......
+...........
+...rr......
+...rr......
+...........
+!map
+@warps
+9x9[2] = littleroot->6x10[2] door_open
+10x9[2] = littleroot->6x10[2] door_open
+9x3 = trainer_house_upstairs->8x3[2] door_open
+!warps

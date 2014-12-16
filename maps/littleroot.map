@@ -51,10 +51,10 @@ tuTUTUTUTUTUTUTUtutu
 12x1[0] = path->12x18[0]
 
 // Trainer's house
-6x9 = trainer_house_downstairs->1x1[0] door_open
+6x9 = trainer_house_downstairs->9x9[0] door_open
 
 // Rival's house
-15x9 = rival_house_downstairs->1x1[0] door_open
+15x9 = rival_house_downstairs->6x9[0] door_open
 
 // Oak's lab
 8x17 = oak_lab->1x1[0] door_open

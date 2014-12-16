@@ -7,6 +7,7 @@ var x, y, xamt, yamt;
 var pos = [+$("#trainer").css("left").replace(/[^-\d\.]/g, ''),+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+6];
 var tilepos = [(+$("#trainer").css("left").replace(/[^-\d\.]/g, '')+16)/16,(+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+22)/16];
 var godmode = false;
+var showpos = false;
 
 // Load boundaries and warps
 loadBoundaries();
@@ -128,6 +129,9 @@ function validMove(direction) {
 function updatePos() {
     pos = [+$('#trainer').css("left").replace(/[^-\d\.]/g, ''), +$('#trainer').css("top").replace(/[^-\d\.]/g, '')+6];
     tilepos = [(+$("#trainer").css("left").replace(/[^-\d\.]/g, '')+16)/16,(+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+22)/16];
+    if (showpos) {
+        console.log(pos + " [" + tilepos + "]");
+    }
 }
 
 // If player moves into warp spot, load in new data else normal move action
@@ -189,13 +193,6 @@ function checkWarps(direction) {
             loadBoundaries();
             loadWarps();
 
-            // Move player to new location
-            $("#trainer").css("left", (dst_x-1)*16);
-            $("#trainer").css("top", (((dst_y-1)*16)-6));
-
-            // Update tilepos and pos
-            updatePos();
-
             // Get old music
             var oldMusic = $("music").html();
 
@@ -206,26 +203,34 @@ function checkWarps(direction) {
             $("#walkables_css").attr('href', 'walkables/' + warp.map + '.css');
 
             // Load in new map
-            $("#map").attr('src', 'img/maps/' + warp.map + '.png');
+            $("#map").attr('src', 'img/maps/' + warp.map + '.png').promise().done(function() {
 
-            // Load in new walkables
-            $.get("walkables/" + warp.map + ".html", function(data) {
-                $("#walkables").html(data).promise().done(function(){
-                    // Get new music
-                    var newMusic = $("music").html();
+                // Make user face proper direction (if any)
+                if (dst_direction !== false) {
+                    $("#trainer").attr('src', 'img/sprites/trainer_' + directions[dst_direction] + '_1.png');
+                }
 
-                    if (oldMusic != newMusic) {
-                        // Fadeout previous song and play new song
-                        music.fadeTo(0, 1000, function() {music.stop(); playMusic()});
+                // Move player to new location
+                $("#trainer").css("left", (dst_x-1)*16);
+                $("#trainer").css("top", (((dst_y-1)*16)-6));
 
-                    }
+                // Update tilepos and pos
+                updatePos();
+
+                // Load in new walkables
+                $.get("walkables/" + warp.map + ".html", function(data) {
+                    $("#walkables").html(data).promise().done(function(){
+                        // Get new music
+                        var newMusic = $("music").html();
+
+                        if (oldMusic != newMusic) {
+                            // Fadeout previous song and play new song
+                            music.fadeTo(0, 1000, function() {music.stop(); playMusic()});
+
+                        }
+                    });
                 });
             });
-
-            // Make user face proper direction (if any)
-            if (dst_direction !== false) {
-                $("#trainer").attr('src', 'img/sprites/trainer_' + directions[dst_direction] + '_1.png');
-            }
 
             // Don't move player in direction they were headed since this was a valid warp
             valid = true;
