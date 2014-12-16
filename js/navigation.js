@@ -163,17 +163,18 @@ function checkWarps(direction) {
     var directions = ["back", "right", "front", "left"];
     var valid = false;
     $.each(warps, function(index, warp) {
-        src_x = warp.src_coords["x"];
-        src_y = warp.src_coords["y"];
+        src_x = +warp.src_coords["x"];
+        src_y = +warp.src_coords["y"];
 
-        dst_x = warp.dst_coords["x"];
-        dst_y = warp.dst_coords["y"];
+        dst_x = +warp.dst_coords["x"];
+        dst_y = +warp.dst_coords["y"];
 
         dst_direction = warp.dst_direction;
 
         // Move to tile but not require move after in certain direction
         if ((tilepos[0]+xtile == src_x && tilepos[1]+ytile == src_y && warp.src_direction === false) || tilepos[0] == src_x && tilepos[1] == src_y && +warp.src_direction === direction && warp.src_direction !== false) {
-            console.log("Moved to proper tile - warp valid");
+            console.log(warp);
+            //console.log("Moved to proper tile - warp valid");
             // Update map id
             $('id').html(warp.map);
 
@@ -188,20 +189,27 @@ function checkWarps(direction) {
             loadWarps();
 
             // Move player to new location
-            $("#trainer").css("top", ((dst_x-1)*16)-6);
-            $("#trainer").css("left", (dst_y-1)*16);
+            $("#trainer").css("left", (dst_x-1)*16);
+            $("#trainer").css("top", (((dst_y-1)*16)-6));
+            console.log(dst_y);
 
             // Update tilepos and pos
             updatePos();
 
-            // Load in new walkables
-            $.get("walkables/" + warp.map + ".html", function(data) {
-                $("#walkables").html(data);
-                console.log("Loaded in new walkables data");
-            });
+            // Clear old walkables
+            $("#walkables").empty();
+
+            // Update walkables css
+            $("#walkables_css").attr('href', 'walkables/' + warp.map + '.css');
 
             // Load in new map
             $("#map").attr('src', 'img/maps/' + warp.map + '.png');
+
+            // Load in new walkables
+            $.get("walkables/" + warp.map + ".html", function(data) {
+                $("#walkables").html(data);
+                //console.log("Loaded in new walkables data");
+            });
 
             // Make user face proper direction (if any)
             if (dst_direction !== false) {

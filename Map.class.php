@@ -159,7 +159,7 @@ class Map
         }
     }
 
-    public function genImage($save = false) {
+    public function genImage($save = false, $name = null) {
         $tiles  = imagecreatefrompng(Map::TILES);
         $lines  = explode("\n", $this->map_data);
         $width  = max(array_map('strlen', $lines));
@@ -243,7 +243,13 @@ class Map
         }
         if ($save) {
             // Save map
-            $this->id = substr(md5(mt_rand(1,1000000)), 0, 16);
+            // if null, use original name
+            if ($name === null) {
+                preg_match("/\/(.*)/", $this->src, $name);
+                $this->id = substr($name[0], 1, -4);
+            } else {
+                $this->id = substr(md5(mt_rand(1,1000000)), 0, 16);
+            }
             imagepng($this->map, "img/maps/" . $this->id . ".png");
 
             // Save boundaries

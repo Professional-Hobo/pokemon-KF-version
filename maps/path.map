@@ -41,3 +41,8 @@ nnnndeeeeeefnnnnDJFn
 nnnnghhhhhlfnnnnGHIn
 rrrrrrrrrrdfrrrrrrrr
 !map
+@warps
+// Littleroot
+12x18[2] = littleroot->12x1[2]
+11x18[2] = littleroot->11x1[2]
+!warps
