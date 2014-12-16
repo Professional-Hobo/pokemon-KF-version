@@ -20,7 +20,8 @@ $map = new Map("maps/littleroot.map");
             <?=file_get_contents("walkables/littleroot.html")?>
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="js/navigation.js"></script>
+        <script src="js/buzz.min.js"></script>
         <script src="js/music.js"></script>
+        <script src="js/navigation.js"></script>
     </body>
 </html>

@@ -22,11 +22,13 @@ class Map
     private $unused = array();
     private $sections = array();
     private $warps = array();
+    private $headers = array();
 
     public function Map($src) {
         $this->src = $src;
         $this->loadContent();
         $this->parseContent();
+        $this->extractHeaders();
         $this->extractVars();
         $this->extractTiles();
         $this->extractWarps();
@@ -58,6 +60,7 @@ class Map
         $ex = array_values($ex);
         $this->lines = $ex;
 
+        $this->sections["headers"] = array(array_search("@headers", $ex), array_search("!headers", $ex));
         $this->sections["vars"] = array(array_search("@vars", $ex), array_search("!vars", $ex));
         if ($this->sections["vars"][0] === false || $this->sections["vars"][1] === false) {
             $this->setStatus("Failed to detect variable definitions.");
@@ -68,6 +71,20 @@ class Map
         }
         $this->sections["warps"] = array(array_search("@warps", $ex), array_search("!warps", $ex));
         $this->sections["events"] = array(array_search("@events", $ex), array_search("!events", $ex));
+    }
+
+    private function extractHeaders() {
+        // Go through each line of warps section
+        $ex = array_slice($this->lines, $this->sections["headers"][0]+1, $this->sections["headers"][1]-($this->sections["headers"][0]+1));
+        foreach ($ex as $line) {
+            // Seperate between the =
+            $deli = explode("=", $line);
+            foreach ($deli as &$value) {
+                $value = trim($value);
+            }
+
+            $this->headers[$deli[0]] = $deli[1];
+        }
     }
 
     private function extractVars() {
@@ -258,6 +275,11 @@ class Map
             foreach ($this->walkables as $index => $walk) {
                 $css  .= "#WLK_" . $index . "{position:absolute; top: " . ($walk["y"]+8) . "px; left: " . ($walk["x"]+8) . "px; z-index: 3;}\n";
                 $html .= "<img id=\"WLK_" . $index . "\" src=\"data:image/png;base64," . $walk["data"] . "\">\n";
+            }
+
+            // Add music location
+            if ($this->headers["music"] !== null) {
+                $html .= "<music hidden>" . $this->headers["music"] . "</music>";
             }
 
             // Save walkable tiles css

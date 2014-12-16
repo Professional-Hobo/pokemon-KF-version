@@ -12,6 +12,9 @@ var godmode = false;
 loadBoundaries();
 loadWarps();
 
+// Start music
+playMusic($("music").html());
+
 // Fetch boundary data
 function loadBoundaries() {
     var id = $('id').html();
@@ -173,8 +176,6 @@ function checkWarps(direction) {
 
         // Move to tile but not require move after in certain direction
         if ((tilepos[0]+xtile == src_x && tilepos[1]+ytile == src_y && warp.src_direction === false) || tilepos[0] == src_x && tilepos[1] == src_y && +warp.src_direction === direction && warp.src_direction !== false) {
-            console.log(warp);
-            //console.log("Moved to proper tile - warp valid");
             // Update map id
             $('id').html(warp.map);
 
@@ -191,10 +192,12 @@ function checkWarps(direction) {
             // Move player to new location
             $("#trainer").css("left", (dst_x-1)*16);
             $("#trainer").css("top", (((dst_y-1)*16)-6));
-            console.log(dst_y);
 
             // Update tilepos and pos
             updatePos();
+
+            // Get old music
+            var oldMusic = $("music").html();
 
             // Clear old walkables
             $("#walkables").empty();
@@ -207,8 +210,16 @@ function checkWarps(direction) {
 
             // Load in new walkables
             $.get("walkables/" + warp.map + ".html", function(data) {
-                $("#walkables").html(data);
-                //console.log("Loaded in new walkables data");
+                $("#walkables").html(data).promise().done(function(){
+                    // Get new music
+                    var newMusic = $("music").html();
+
+                    if (oldMusic != newMusic) {
+                        // Fadeout previous song and play new song
+                        music.fadeTo(0, 1000, function() {music.stop(); playMusic()});
+
+                    }
+                });
             });
 
             // Make user face proper direction (if any)

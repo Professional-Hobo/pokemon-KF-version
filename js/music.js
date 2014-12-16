@@ -1,6 +1,8 @@
-var music = new Audio('sounds/music/littleroot.m4a');
-music.addEventListener('ended', function() {
-    this.currentTime = 0;
-    this.play();
-}, false);
-music.play();
+var music;
+var song;
+
+function playMusic() {
+    song = $("music").html();
+    music = new buzz.sound('sounds/music/' + song + '.m4a', {preload: true, loop: true, volume: 0});
+    music.fadeTo(50, 1000);
+}

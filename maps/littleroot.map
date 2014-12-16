@@ -1,3 +1,6 @@
+@headers
+music = littleroot
+!headers
 @vars
 . = GRASS_5
 a = TREE_2_BOT_L_NBG^TREE_2_TOP_L_NBG
