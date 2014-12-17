@@ -1,7 +1,7 @@
 #!/bin/bash
-rm -f boundaries/*.json
-rm -f walkables/*.html
-rm -f walkables/*.css
-rm -f warps/*.json
-rm -f img/maps/*.png
-touch walkables/index.html
+rm -f data/boundaries/*.json
+rm -f data/walkables/*.html
+rm -f data/walkables/*.css
+rm -f data/warps/*.json
+rm -f data/img/*.png
+touch data/walkables/index.html

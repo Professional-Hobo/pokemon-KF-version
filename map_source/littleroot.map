@@ -59,3 +59,9 @@ tuTUTUTUTUTUTUTUtutu
 // Birch's lab
 8x17[0]* = birch_lab->6x10[0] door_open
 !warps
+@events
+8x9 = "PLAYER's house"
+13x9 = "RIVAL's house"
+16x14 = "Farhan is fat"
+7x18 = "Prof. Birch's Lab"
+!events

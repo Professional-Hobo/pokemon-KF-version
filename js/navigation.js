@@ -3,13 +3,14 @@ var map = document.getElementById('map');
 var bump = new buzz.sound('sounds/bump.m4a');
 var boundaries;
 var warps;
+var events;
 var pos = [+$("#trainer").css("left").replace(/[^-\d\.]/g, ''),+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+6];
 var tilepos = [(+$("#trainer").css("left").replace(/[^-\d\.]/g, '')+16)/16,(+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+22)/16];
 var godmode = false;
 var showpos = false;
 var delay = 125;
 var walking = false;
-var facing;
+var facing = 2;
 var UP = 0
 var RIGHT = 1
 var DOWN = 2
@@ -22,6 +23,7 @@ var amt = {
     2: {left: 0, top: 16, xtile: 0, ytile: 1},
     3: {left: -16, top: 0, xtile: -1, ytile: 0}
 };
+var looking = tilepos;
 
 var dirs = {
     38: 0,
@@ -33,14 +35,14 @@ var dirs = {
 // Load boundaries and warps initially
 loadBoundaries();
 loadWarps();
+loadEvents();
 
 // Start playing music
 playMusic($("music").html());
 
-// Key events
 $(document).keydown(function(e) {
     // Only move if proper key is used
-    if (inArray(e.which, arrows) && !walking) {
+    if (inArray(e.which, arrows) && !walking && !msgOpen) {
         e.preventDefault();
         // Increase step counter
         steps++;
@@ -74,8 +76,9 @@ function validMove(direction) {
 function updatePos() {
     pos = [+$('#trainer').css("left").replace(/[^-\d\.]/g, ''), +$('#trainer').css("top").replace(/[^-\d\.]/g, '')+6];
     tilepos = [(+$("#trainer").css("left").replace(/[^-\d\.]/g, '')+16)/16,(+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+22)/16];
+    looking = [tilepos[0] + amt[facing].xtile, (tilepos[1] + amt[facing].ytile)];
     if (showpos) {
-        console.log("X: " + pos[0] + " [" + tilepos[0] + "]\n Y: " + pos[1] + " [" + tilepos[1] + "]\n Direction: " + facing + " [" + directions[facing] + "]");
+        console.log("X: " + pos[0] + " [" + tilepos[0] + "]\n Y: " + pos[1] + " [" + tilepos[1] + "]\n Direction: " + facing + " [" + directions[facing] + "]\n Facing: [" + looking[0] + ", " + looking[1] + "]");
     }
 }
 
@@ -123,6 +126,7 @@ function isWarp(direction) {
                             // Reload boundaries and warp data
                             loadBoundaries();
                             loadWarps();
+                            loadEvents();
                         });
                     });
                 });
@@ -134,6 +138,7 @@ function isWarp(direction) {
                     // Reload boundaries and warp data
                     loadBoundaries();
                     loadWarps();
+                    loadEvents();
                 });
             }
 
@@ -145,10 +150,10 @@ function isWarp(direction) {
                 $("#walkables").empty();
 
                 // Update walkables css
-                $("#walkables_css").attr('href', 'walkables/' + warp.map + '.css');
+                $("#walkables_css").attr('href', 'data/walkables/' + warp.map + '.css');
 
                 // Load in new map
-                $("#map").attr('src', 'img/maps/' + warp.map + '.png').promise().done(function() {
+                $("#map").attr('src', 'data/img/' + warp.map + '.png').promise().done(function() {
 
                     // Make user face proper direction (if any)
                     if (dst_direction !== false) {
@@ -161,7 +166,7 @@ function isWarp(direction) {
 
 
                     // Load in new walkables
-                    $.get("walkables/" + warp.map + ".html", function(data) {
+                    $.get("data/walkables/" + warp.map + ".html", function(data) {
                         $("#walkables").html(data).promise().done(function(){
 
                             // Get new music
@@ -197,6 +202,7 @@ function isWarp(direction) {
                             // Reload boundaries and warp data
                             loadBoundaries();
                             loadWarps();
+                            loadEvents();
                         });
                     });
                 }
@@ -204,22 +210,28 @@ function isWarp(direction) {
             }
         }
     });
-
     return valid;
 }
 
 // Fetch boundary data
 function loadBoundaries() {
     var id = $('id').html();
-    $.getJSON("boundaries/" + id + ".json", function( data ) {
+    $.getJSON("data/boundaries/" + id + ".json", function( data ) {
         boundaries = data;
     });
 }
 
 function loadWarps() {
     var id = $('id').html();
-    $.getJSON("warps/" + id + ".json", function( data ) {
+    $.getJSON("data/warps/" + id + ".json", function( data ) {
         warps = data;
+    });
+}
+
+function loadEvents() {
+    var id = $('id').html();
+    $.getJSON("data/events/" + id + ".json", function( data ) {
+        events = data;
     });
 }
 
@@ -258,6 +270,7 @@ function move(direction) {
                     walking = false;
                 });
                 bump.play();
+                updatePos();
             }
         }
     }

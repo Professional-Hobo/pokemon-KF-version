@@ -50,3 +50,9 @@ rrrrrrrrrrdfrrrrrrrr
 12x18[2] = littleroot->12x1[2]
 11x18[2] = littleroot->11x1[2]
 !warps
+@events
+18x16 = "You found a Pokeball but there is nothing in it!" congrats
+10x11 = "You found a rock!11!1111!" congrats
+13x7 = "PLAYER found a gold nugget!" congrats_2
+16x11 = "You thought something would be here?"
+!events

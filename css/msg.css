@@ -1,0 +1,47 @@
+@font-face {
+    font-family: pkmnrs;
+    src: url("../fonts/pkmnrs.ttf");
+}
+
+#msg_top {
+    position: absolute;
+    visibility: hidden;
+    top: 10%;
+    left: 10%;
+    background-image: url("../img/textbox.png");
+    background-repeat: no-repeat;
+    width: 252px;
+    height: 44px;
+    z-index: 4;
+}
+#msg_top_text {
+    position: absolute;
+    margin: 4px 3px 4px 4px;
+    font-family: pkmnrs;
+    overflow: hidden;
+    text-overflow: clip;
+    word-wrap: break-word;
+    width: 95%;
+    height: 90%;
+}
+#msg_bottom {
+    position: absolute;
+    visibility: hidden;
+    top: 80%;
+    left: 10%;
+    background-image: url("../img/textbox.png");
+    background-repeat: no-repeat;
+    width: 252px;
+    height: 44px;
+    z-index: 4;
+}
+#msg_bottom_text {
+    position: absolute;
+    margin: 4px 3px 4px 4px;
+    font-family: pkmnrs;
+    overflow: hidden;
+    text-overflow: clip;
+    word-wrap: break-word;
+    width: 95%;
+    height: 90%;
+}

@@ -22,6 +22,7 @@ class Map
     private $unused = array();
     private $sections = array();
     private $warps = array();
+    private $events = array();
     private $headers = array();
 
     public function Map($src) {
@@ -32,6 +33,7 @@ class Map
         $this->extractVars();
         $this->extractTiles();
         $this->extractWarps();
+        $this->extractEvents();
         $this->checkUnused();
         if (count($this->unused) != 0 && Map::STRICT) {
             echo $this->getStatus();
@@ -184,6 +186,31 @@ class Map
         }
     }
 
+    private function extractEvents() {
+        // Go through each line of events section
+        $ex = array_slice($this->lines, $this->sections["events"][0]+1, $this->sections["events"][1]-($this->sections["events"][0]+1));
+        foreach ($ex as $line) {
+            // Seperate between the =
+            $deli = explode("=", $line);
+            foreach ($deli as &$value) {
+                $value = trim($value);
+            }
+
+            // Textbox event
+            if (preg_match("/\".*\"/", $deli[1], $event)) {
+                 // Get coords of event
+                preg_match("/\d*x\d*/", $deli[0], $coords);
+                $coords = array("x" => substr($coords[0], 0, strpos($coords[0], "x")), "y" => substr($coords[0], strpos($coords[0], "x")+1));
+
+                $event = substr($event[0], 1, -1);
+                if (preg_match("/(\w*)\s*$/", $deli[1], $sound)) {
+                    $sound = $sound[0];
+                }
+                $this->events[] = array("coords" => $coords, "event" => "text", "sound" => $sound, "value" => $this->var_replace($event));
+            }
+        }
+    }
+
     public function genImage($save = false, $name = null) {
         $tiles  = imagecreatefrompng(Map::TILES);
         $lines  = explode("\n", $this->map_data);
@@ -277,11 +304,11 @@ class Map
             }
             // If image is preloaded, don't save
             if ($this->headers["preimage"] != "true") {
-                imagepng($this->map, "img/maps/" . $this->id . ".png");
+                imagepng($this->map, "data/img/" . $this->id . ".png");
             }
 
             // Save boundaries
-            file_put_contents("boundaries/" . $this->id . ".json", json_encode($this->getBoundaries()));
+            file_put_contents("data/boundaries/" . $this->id . ".json", json_encode($this->getBoundaries()));
 
             foreach ($this->walkables as $index => $walk) {
                 $css  .= "#WLK_" . $index . "{position:absolute; top: " . ($walk["y"]+8) . "px; left: " . ($walk["x"]+8) . "px; z-index: 3;}\n";
@@ -294,13 +321,16 @@ class Map
             }
 
             // Save walkable tiles css
-            file_put_contents("walkables/" . $this->id . ".css", $css);
+            file_put_contents("data/walkables/" . $this->id . ".css", $css);
 
             // Save walkable tiles html
-            file_put_contents("walkables/" . $this->id . ".html", $html);
+            file_put_contents("data/walkables/" . $this->id . ".html", $html);
 
             // Save Warps
-            file_put_contents("warps/" . $this->id . ".json", json_encode($this->warps));
+            file_put_contents("data/warps/" . $this->id . ".json", json_encode($this->warps));
+
+            // Save Events
+            file_put_contents("data/events/" . $this->id . ".json", json_encode($this->events));
 
         } else {
             header('Content-Type: image/png');
@@ -373,6 +403,14 @@ class Map
             $rect['height']
         );
     return $dest;
+    }
+
+    private function var_replace($text) {
+        $str = $text;
+        $str = str_replace("PLAYER", "Keith", $str);
+        $str = str_replace("RIVAL", "Farhan", $str);
+
+        return $str;
     }
 }
 ?>
