@@ -7,12 +7,12 @@ function preload(arrayOfImages) {
 }
 
 preload([
-    "img/maps/birch_lab.png",
-    "img/maps/littleroot.png",
-    "img/maps/path.png",
-    "img/maps/rival_house_downstairs.png",
-    "img/maps/trainer_house_downstairs.png",
-    "img/maps/trainer_house_upstairs.png",
+    "data/img/birch_lab.png",
+    "data/img/littleroot.png",
+    "data/img/path.png",
+    "data/img/rival_house_downstairs.png",
+    "data/img/trainer_house_downstairs.png",
+    "data/img/trainer_house_upstairs.png",
     "img/sprites/trainer_up_1.png",
     "img/sprites/trainer_up_2.png",
     "img/sprites/trainer_up_3.png",

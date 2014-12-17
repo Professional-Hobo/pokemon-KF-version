@@ -55,4 +55,5 @@ rrrrrrrrrrdfrrrrrrrr
 10x11 = "You found a rock!11!1111!" congrats
 13x7 = "PLAYER found a gold nugget!" congrats_2
 16x11 = "You thought something would be here?"
+6x7 = "PLAYER found some secret sand!" congrats_2
 !events

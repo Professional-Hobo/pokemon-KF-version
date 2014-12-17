@@ -20,3 +20,11 @@ rrrrrrr.r
 @warps
 8x2[0]* = trainer_house_downstairs->9x3[2]* door_open
 !warps
+@events
+6x2 = "It's Adventure Time!"
+5x2 = "There's some weird show on of kids catching animals in balls?"
+4x2 = "It's a gamecube!"
+2x2 = "The pages are blank."
+1x2 = "PLAYER turned on the PC."
+2x5 = "You can only sleep at night."
+!events

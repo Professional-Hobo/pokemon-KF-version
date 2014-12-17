@@ -23,7 +23,6 @@ function checkEvents() {
                 inEvent = true;
                 msgOpen = true;
                 if (value.sound != "" && value.sound !== undefined) {
-                    console.log(sound);
                     music.pause();
                     var sound = new buzz.sound('sounds/' + value.sound + '.m4a');
                     sound.bind('ended', function(e) { // when current file ends

@@ -3,20 +3,34 @@ music = birch_lab
 !headers
 @vars
 . = GRASS_5
-s = GRASS_5^SAND_PATCH
+S = SAND_PATH_MID_M^METAL_SIGN
+a = SAND_PATH_TOP_L^ROCK
+c = SAND_PATH_TOP_R^ROCK
+d = SAND_PATH_MID_L
+e = SAND_PATH_MID_M
+f = SAND_PATH_MID_R
+w = WILD_GRASS
+W = WILD_GRASS^ROCK
+r = SAND_PATH_MID_M^ROCK
 !vars
 @map
-..........
-..........
-..........
-..........
-..........
-..........
-..........
-..........
-..........
-.....s....
+WWWarrcWWW
+wwwdeefwww
+ww.deefw.w
+w..deefwww
+.wwdeef.ww
+wwwdeSfwww
+wwwdeefww.
+w.wdeefww.
+wwwdeefwww
+wwwdeefwww
 !map
 @warps
+4x10[2] = littleroot->8x17[2]* door_open
+5x10[2] = littleroot->8x17[2]* door_open
 6x10[2] = littleroot->8x17[2]* door_open
+7x10[2] = littleroot->8x17[2]* door_open
 !warps
+@events
+6x6 = "Whoa, where are you?"
+!events
