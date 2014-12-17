@@ -18,5 +18,5 @@ rrrrrrr.r
 .........
 !map
 @warps
-8x2 = trainer_house_downstairs->9x4[2] door_open
+8x2[0]* = trainer_house_downstairs->9x3[2]* door_open
 !warps

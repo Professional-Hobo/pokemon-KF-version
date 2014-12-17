@@ -156,6 +156,10 @@ class Map
             preg_match("/\[\d\]/", $deli[0], $src_direction);
             $src_direction = substr($src_direction[0], 1, 1);
 
+            // Determine if player should walk in to spot or not
+            preg_match("/\*/", $deli[0], $walkin);
+            $walkin = $walkin[0] == "*" ? true : false;
+
             // Get the new map to load in
             preg_match("/.+?(?=->)/", $deli[1], $dst_map);
             $dst_map = $dst_map[0];
@@ -168,11 +172,15 @@ class Map
             preg_match("/\[\d\]/", $deli[1], $dst_direction);
             $dst_direction = substr($dst_direction[0], 1, 1);
 
+            // Determine if player should walk out to spot or not
+            preg_match("/\*/", $deli[1], $walkout);
+            $walkout = $walkout[0] == "*";
+
             // Get sound effect (if any) for when player warps
             preg_match("/\s(.*)/", $deli[1], $sound);
             $sound = substr($sound[0], 1);
 
-            $this->warps[] = array("src_coords" => $src_coords, "src_direction" => $src_direction, "map" => $dst_map, "dst_coords" => $dst_coords, "dst_direction" => $dst_direction, "sound" => $sound);
+            $this->warps[] = array("src_coords" => $src_coords, "src_direction" => $src_direction, "walkin" => $walkin, "map" => $dst_map, "dst_coords" => $dst_coords, "dst_direction" => $dst_direction, "walkout" => $walkout, "sound" => $sound);
         }
     }
 

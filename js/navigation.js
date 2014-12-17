@@ -40,7 +40,7 @@ playMusic($("music").html());
 // Key events
 $(document).keydown(function(e) {
     // Only move if proper key is used
-    if (inArray(e.which, arrows)) {
+    if (inArray(e.which, arrows) && !walking) {
         e.preventDefault();
         // Increase step counter
         steps++;
@@ -97,7 +97,9 @@ function isWarp(direction) {
         dst_direction = warp.dst_direction;
 
         // Valid warp
-        if ((tilepos[0]+amt[direction].xtile == src_x && tilepos[1]+amt[direction].ytile == src_y && warp.src_direction === false) || tilepos[0] == src_x && tilepos[1] == src_y && +warp.src_direction === direction && warp.src_direction !== false) {
+        if ((tilepos[0]+amt[direction].xtile == src_x && tilepos[1]+amt[direction].ytile == src_y && (warp.src_direction === false || warp.walkin === true)) || tilepos[0] == src_x && tilepos[1] == src_y && +warp.src_direction === direction && warp.src_direction !== false) {
+            walking = true;
+
             // Update map id
             $('id').html(warp.map);
 
@@ -107,54 +109,99 @@ function isWarp(direction) {
                 sound.play();
             }
 
-            // Reload boundaries and warp data
-            loadBoundaries();
-            loadWarps();
+            // Show walk animation first and then update
+            if (warp.walkin === true && warp.src_direction == direction) {
+                $("#trainer").attr('src', 'img/sprites/trainer_' + directions[direction] + '_1.png').promise().done(function() {
+                    $( "#trainer" ).animate({
+                        left: "+=" + amt[direction].left,
+                        top: "+=" + amt[direction].top,
+                    }, 300, function() {
+                        dostuff(+warp.dst_coords["x"], +warp.dst_coords["y"], function() {
+                            // Update tilepos and pos
+                            updatePos();
 
-            // Get old music
-            var oldMusic = $("music").html();
-
-            // Clear old walkables
-            $("#walkables").empty();
-
-            // Update walkables css
-            $("#walkables_css").attr('href', 'walkables/' + warp.map + '.css');
-
-            // Load in new map
-            $("#map").attr('src', 'img/maps/' + warp.map + '.png').promise().done(function() {
-
-                // Make user face proper direction (if any)
-                if (dst_direction !== false) {
-                    $("#trainer").attr('src', 'img/sprites/trainer_' + directions[dst_direction] + '_1.png');
-                }
-
-                // Move player to new location
-                $("#trainer").css("left", (dst_x-1)*16);
-                $("#trainer").css("top", (((dst_y-1)*16)-6));
-
-                // Update tilepos and pos
-                updatePos();
-
-                // Load in new walkables
-                $.get("walkables/" + warp.map + ".html", function(data) {
-                    $("#walkables").html(data).promise().done(function(){
-                        // Get new music
-                        var newMusic = $("music").html();
-
-                        if (oldMusic != newMusic) {
-                            // Fadeout previous song and play new song
-                            music.fadeTo(0, 1000, function() {music.stop(); playMusic()});
-
-                        }
+                            // Reload boundaries and warp data
+                            loadBoundaries();
+                            loadWarps();
+                        });
                     });
                 });
-            });
+            } else {
+                dostuff(+warp.dst_coords["x"], +warp.dst_coords["y"], function() {
+                    // Update tilepos and pos
+                    updatePos();
 
-            // Update player's direction
-            facing = direction;
+                    // Reload boundaries and warp data
+                    loadBoundaries();
+                    loadWarps();
+                });
+            }
 
-            // Don't move player in direction they were headed since this was a valid warp
-            valid = true;
+            function dostuff(dst_x, dst_y, callback) {
+                // Get old music
+                var oldMusic = $("music").html();
+
+                // Clear old walkables
+                $("#walkables").empty();
+
+                // Update walkables css
+                $("#walkables_css").attr('href', 'walkables/' + warp.map + '.css');
+
+                // Load in new map
+                $("#map").attr('src', 'img/maps/' + warp.map + '.png').promise().done(function() {
+
+                    // Make user face proper direction (if any)
+                    if (dst_direction !== false) {
+                        $("#trainer").attr('src', 'img/sprites/trainer_' + directions[dst_direction] + '_1.png');
+                    }
+
+                    // Move player to new location
+                    $("#trainer").css("left", (dst_x-1)*16);
+                    $("#trainer").css("top", (((dst_y-1)*16)-6));
+
+
+                    // Load in new walkables
+                    $.get("walkables/" + warp.map + ".html", function(data) {
+                        $("#walkables").html(data).promise().done(function(){
+
+                            // Get new music
+                            var newMusic = $("music").html();
+
+                            if (oldMusic != newMusic) {
+                                // Fadeout previous song and play new song
+                                music.fadeTo(0, 1000, function() {music.stop(); playMusic()});
+
+                            }
+                        });
+                    });
+                });
+
+                // Update player's direction
+                facing = direction;
+
+                // Don't move player in direction they were headed since this was a valid warp
+                valid = true;
+
+                walking = false;
+
+                // Show walk out animation if set
+                if (warp.walkout === true) {
+                    $("#trainer").attr('src', 'img/sprites/trainer_' + directions[dst_direction] + '_1.png').promise().done(function() {
+                        $( "#trainer" ).animate({
+                            left: "+=" + amt[dst_direction].left,
+                            top: "+=" + amt[dst_direction].top,
+                        }, 300, function() {
+                            // Update tilepos and pos
+                            updatePos();
+
+                            // Reload boundaries and warp data
+                            loadBoundaries();
+                            loadWarps();
+                        });
+                    });
+                }
+                typeof callback == "function" && callback();
+            }
         }
     });
 
