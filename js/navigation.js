@@ -6,8 +6,7 @@ var warps;
 var events;
 var pos = [+$("#trainer").css("left").replace(/[^-\d\.]/g, ''),+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+6];
 var tilepos = [(+$("#trainer").css("left").replace(/[^-\d\.]/g, '')+16)/16,(+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+22)/16];
-var godmode = false;
-var showpos = false;
+var bounds;
 var delay = 125;
 var walking = false;
 var facing = 2;
@@ -31,6 +30,7 @@ var dirs = {
     40: 2,
     37: 3
 };
+var id = $('id').html();
 
 // Load boundaries and warps initially
 loadBoundaries();
@@ -78,7 +78,8 @@ function updatePos() {
     tilepos = [(+$("#trainer").css("left").replace(/[^-\d\.]/g, '')+16)/16,(+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+22)/16];
     looking = [tilepos[0] + amt[facing].xtile, (tilepos[1] + amt[facing].ytile)];
     if (showpos) {
-        console.log("X: " + pos[0] + " [" + tilepos[0] + "]\n Y: " + pos[1] + " [" + tilepos[1] + "]\n Direction: " + facing + " [" + directions[facing] + "]\n Facing: [" + looking[0] + ", " + looking[1] + "]");
+        bounds = !(pos[0] >= map.naturalWidth || pos[0] < 0 || pos[1] >= map.naturalHeight || pos[1] < 0);
+        console.log("X: " + pos[0] + " [" + tilepos[0] + "] Direction: " + facing + " [" + directions[facing] + "] withinBounds: " + bounds + "\n Y: " + pos[1] + " [" + tilepos[1] + "] Facing: [" + looking[0] + ", " + looking[1] + "] Map: " + id);
     }
 }
 
@@ -109,6 +110,9 @@ function isWarp(direction) {
             // Play warp sound if any
             if (warp.sound !== false) {
                 var sound = new buzz.sound('sounds/' + warp.sound + '.m4a');
+                if (debug) {
+                    logger(GAME + "play event sound \"" + warp.sound + "\".");
+                }
                 sound.play();
             }
 
@@ -153,6 +157,9 @@ function isWarp(direction) {
                 $("#walkables_css").attr('href', 'data/walkables/' + warp.map + '.css');
 
                 // Load in new map
+                if (debug) {
+                    logger(GAME + "loading in map \"" + warp.map + "\".");
+                }
                 $("#map").attr('src', 'data/img/' + warp.map + '.png').promise().done(function() {
 
                     // Make user face proper direction (if any)
@@ -175,6 +182,9 @@ function isWarp(direction) {
                             if (oldMusic != newMusic) {
                                 // Fadeout previous song and play new song
                                 music.fadeTo(0, 1000, function() {music.stop(); playMusic()});
+                                if (debug) {
+                                    logger(GAME + "[" + tilepos + "]" + " playing song \"" + newMusic + "\".");
+                                }
 
                             }
                         });
@@ -215,21 +225,21 @@ function isWarp(direction) {
 
 // Fetch boundary data
 function loadBoundaries() {
-    var id = $('id').html();
+    id = $('id').html();
     $.getJSON("data/boundaries/" + id + ".json", function( data ) {
         boundaries = data;
     });
 }
 
 function loadWarps() {
-    var id = $('id').html();
+    id = $('id').html();
     $.getJSON("data/warps/" + id + ".json", function( data ) {
         warps = data;
     });
 }
 
 function loadEvents() {
-    var id = $('id').html();
+    id = $('id').html();
     $.getJSON("data/events/" + id + ".json", function( data ) {
         events = data;
     });
@@ -270,6 +280,9 @@ function move(direction) {
                     walking = false;
                 });
                 bump.play();
+                if (debug) {
+                    logger(GAME + "[" + tilepos + "]" + " play bump sound.");
+                }
                 updatePos();
             }
         }

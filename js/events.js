@@ -28,9 +28,15 @@ function checkEvents() {
                     sound.bind('ended', function(e) { // when current file ends
                         music.play(); // trigger the next file to play
                     });
+                    if (debug) {
+                        logger(GAME + "[" + tilepos + "]" + " playing event sound \"" + value.sound + "\".");
+                    }
                     sound.play();
                 } else {
                     var beep = new buzz.sound('sounds/beep.m4a');
+                    if (debug) {
+                        logger(GAME + "[" + tilepos + "]" + " playing default event sound.");
+                    }
                     beep.play();
                 }
                 $("#msg_"+msgLocation).css("visibility", "visible");
