@@ -1,11 +1,11 @@
 var steps = 0;
-var map = document.getElementById('map');
+var map;
 var bump = new buzz.sound('sounds/bump.m4a');
 var boundaries;
 var warps;
 var events;
-var pos = [+$("#trainer").css("left").replace(/[^-\d\.]/g, ''),+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+6];
-var tilepos = [(+$("#trainer").css("left").replace(/[^-\d\.]/g, '')+16)/16,(+$("#trainer").css("top").replace(/[^-\d\.]/g, '')+22)/16];
+var pos;
+var tilepos;
 var bounds;
 var delay = 125;
 var walking = false;
@@ -31,26 +31,6 @@ var dirs = {
     37: 3
 };
 var id = $('id').html();
-
-// Load boundaries and warps initially
-loadBoundaries();
-loadWarps();
-loadEvents();
-
-// Start playing music
-playMusic($("music").html());
-
-$(document).keydown(function(e) {
-    // Only move if proper key is used
-    if (inArray(e.which, arrows) && !walking && !msgOpen) {
-        e.preventDefault();
-        // Increase step counter
-        steps++;
-
-        // Move in direciton
-        move(dirs[e.which]);
-    }
-});
 
 function validMove(direction) {
     var invalidMove = false;
